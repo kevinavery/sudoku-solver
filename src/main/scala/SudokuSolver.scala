@@ -22,7 +22,7 @@ object SudokuSolver {
 
     def rowValues(row: Int) = values.slice(row * 9, row * 9 + 9)
 
-    def colValues(col: Int) = ZeroToEight.map(row => values(row * 9 + col)).toVector
+    def colValues(col: Int) = ZeroToEight.map(row => values(toIndex(row, col))).toVector
 
     def globValues(row: Int, col: Int) = {
       def round(x: Int) = x - (x % 3)
@@ -34,7 +34,7 @@ object SudokuSolver {
       } yield value(ri, ci)
     }
 
-    def nearestFullRow: Int = nearestFull(rowValues)
+    def nearestFullRow = nearestFull(rowValues)
 
     def nearestFull(indexer: Int => Iterable[IntValue]): Int = {
       ZeroToEight.map { i =>
